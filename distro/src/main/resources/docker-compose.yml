@@ -1,0 +1,36 @@
+version: '3'
+services:
+  lottery-bot:
+    build:
+      dockerfile: Dockerfile
+      context: lottery-bot
+    image: lottery-bot
+    ports:
+      - 8080:8080
+  nginx:
+    # 镜像:版本
+    image: nginx:latest
+    # 映射容器80端口到本地80端口
+    ports:
+      - "80:80"
+    # 数据卷 映射本地文件到容器
+    volumes:
+      - ./ui/build:/usr/share/nginx/html
+      - ./common/nginx/cert:/etc/nginx/cert
+      - ./common/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./common/nginx/conf.d:/etc/nginx/conf.d
+      - ./common/nginx/log:/var/log/nginx/
+    # 覆盖容器启动后默认执行的命令。
+    command: /bin/bash -c "nginx -g 'daemon off;'"
+  redis:
+    # 镜像:版本
+    image: redis:7.0.1
+    # 映射容器80端口到本地80端口
+    ports:
+      - "6379:6379"
+    # 数据卷 映射本地文件到容器
+    volumes:
+      - ./common/redis/conf/redis.conf:/etc/redis/redis.conf
+      - ./common/redis/data:/data
+    command: redis-server /etc/redis/redis.conf
+    privileged: true

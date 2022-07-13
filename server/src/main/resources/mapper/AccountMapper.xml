@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfzc.twitter.infrastructure.dao.mapper.AccountMapper">
+
+    <resultMap id="BaseResultMap" type="com.qfzc.twitter.domain.entity.AccountEntity">
+            <id property="id" column="ID" jdbcType="INTEGER"/>
+            <result property="tId" column="T_ID" jdbcType="VARCHAR"/>
+            <result property="name" column="NAME" jdbcType="VARCHAR"/>
+            <result property="wId" column="W_ID" jdbcType="VARCHAR"/>
+            <result property="avatar" column="AVATAR" jdbcType="VARCHAR"/>
+            <result property="tag" column="TAG" jdbcType="VARCHAR"/>
+            <result property="retCount" column="RET_COUNT" jdbcType="INTEGER"/>
+            <result property="status" column="STATUS" jdbcType="INTEGER"/>
+            <result property="apiKey" column="API_KEY" jdbcType="VARCHAR"/>
+            <result property="apiSecret" column="API_SECRET" jdbcType="VARCHAR"/>
+            <result property="accessToken" column="ACCESS_TOKEN" jdbcType="VARCHAR"/>
+            <result property="accessTokenSecret" column="ACCESS_TOKEN_SECRET" jdbcType="VARCHAR"/>
+            <result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR"/>
+            <result property="revision" column="REVISION" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+            <result property="updatedBy" column="UPDATED_BY" jdbcType="VARCHAR"/>
+            <result property="updatedTime" column="UPDATED_TIME" jdbcType="TIMESTAMP"/>
+
+        <association property="walletAddress"
+                     javaType="com.qfzc.twitter.domain.entity.WalletAddressEntity">
+            <result property="id" column="ID" jdbcType="VARCHAR"/>
+            <result property="address" column="ADDRESS" jdbcType="VARCHAR"/>
+            <result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR"/>
+            <result property="revision" column="REVISION" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+            <result property="updatedBy" column="UPDATED_BY" jdbcType="VARCHAR"/>
+            <result property="updatedTime" column="UPDATED_TIME" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,W_ID,T_ID,NAME,
+        AVATAR,TAG,RET_COUNT,
+        STATUS,API_KEY,API_SECRET,
+        ACCESS_TOKEN,ACCESS_TOKEN_SECRET,TENANT_ID,
+        REVISION,CREATED_BY,CREATED_TIME,
+        UPDATED_BY,UPDATED_TIME
+    </sql>
+
+    <select id="randomPickAccount" resultType="com.qfzc.twitter.domain.entity.AccountEntity">
+        select * from account ORDER BY RAND() LIMIT 1
+    </select>
+
+
+</mapper>

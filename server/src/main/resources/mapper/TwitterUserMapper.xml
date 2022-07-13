@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfzc.twitter.infrastructure.dao.mapper.TwitterUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.qfzc.twitter.domain.entity.TwitterUserEntity">
+            <id property="id" column="ID" jdbcType="VARCHAR"/>
+            <id property="name" column="NAME" jdbcType="VARCHAR"/>
+            <result property="nickName" column="NICK_NAME" jdbcType="VARCHAR"/>
+            <result property="homeUrl" column="HOME_URL" jdbcType="VARCHAR"/>
+            <result property="avatar" column="AVATAR" jdbcType="VARCHAR"/>
+            <result property="sinceId" column="SINCE_ID" jdbcType="VARCHAR"/>
+            <result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR"/>
+            <result property="revision" column="REVISION" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+            <result property="updatedBy" column="UPDATED_BY" jdbcType="VARCHAR"/>
+            <result property="updatedTime" column="UPDATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,NAME,NICK_NAME,AVATAR,
+        HOME_URL,SINCE_ID,TENANT_ID,
+        REVISION,CREATED_BY,CREATED_TIME,
+        UPDATED_BY,UPDATED_TIME
+    </sql>
+
+    <select id="selectAllByAddress" resultMap="BaseResultMap">
+        SELECT
+            tu.*
+        FROM
+            wallet_address wa
+                LEFT JOIN account_rel ar ON wa.ID = ar.W_ID
+                LEFT JOIN twitter_user tu ON ar.T_ID = tu.ID
+        WHERE wa.ADDRESS = #{address,jdbcType=VARCHAR}
+        ORDER BY tu.CREATED_TIME DESC
+    </select>
+</mapper>

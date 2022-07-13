@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfzc.twitter.infrastructure.dao.mapper.TweetMapper">
+
+    <resultMap id="BaseResultMap" type="com.qfzc.twitter.domain.entity.TweetEntity">
+        <id property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="text" column="TEXT" jdbcType="VARCHAR"/>
+        <result property="inReplyToUserId" column="IN_REPLY_TO_USER_ID" jdbcType="INTEGER"/>
+        <result property="conversationId" column="CONVERSATION_ID" jdbcType="INTEGER"/>
+        <result property="authorId" column="AUTHOR_ID" jdbcType="INTEGER"/>
+        <result property="createdAt" column="CREATED_AT" jdbcType="TIMESTAMP"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="insertType" column="INSERT_TYPE" jdbcType="INTEGER"/>
+        <result property="tenantId" column="TENANT_ID" jdbcType="VARCHAR"/>
+        <result property="revision" column="REVISION" jdbcType="VARCHAR"/>
+        <result property="createdBy" column="CREATED_BY" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="UPDATED_BY" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="UPDATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID
+        ,TEXT,IN_REPLY_TO_USER_ID,
+        CONVERSATION_ID,AUTHOR_ID,CREATED_AT,
+        STATUS,INSERT_TYPE,TENANT_ID,
+        REVISION,CREATED_BY,CREATED_TIME,
+        UPDATED_BY,UPDATED_TIME
+    </sql>
+
+    <select id="findAllRelWalletByCreatedAtBetweenAndStatusAndInsertType" resultType="com.qfzc.twitter.domain.entity.TweetEntity">
+        SELECT t.*,
+               wa.ADDRESS as walletAddress
+        FROM wallet_address wa
+                 LEFT JOIN account_rel ar ON ar.W_ID = wa.ID
+                 LEFT JOIN twitter_user tu ON ar.T_ID = tu.ID
+                 LEFT JOIN tweet t ON t.AUTHOR_ID = tu.ID
+        WHERE t.INSERT_TYPE = #{insertType}
+          AND t.CREATED_AT BETWEEN #{start} AND #{end}
+          AND t.`STATUS` = #{status}
+    </select>
+
+</mapper>

@@ -1,0 +1,62 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+    <id>distribution</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <moduleSets>
+        <moduleSet>
+            <!--            <useAllReactorProjects>false</useAllReactorProjects>-->
+            <includes>
+                <include>ui/admin-dashboard</include>
+                <include>server</include>
+            </includes>
+            <binaries>
+                <outputDirectory>lib/</outputDirectory>
+                <unpack>false</unpack>
+                <dependencySets>
+                    <dependencySet>
+                        <outputDirectory>lib/</outputDirectory>
+                    </dependencySet>
+                </dependencySets>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+
+    <fileSets>
+        <fileSet>
+            <directory>../server/target</directory>
+            <includes>
+                <include>*.zip</include>
+            </includes>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../ui/admin-dashboard/build</directory>
+            <outputDirectory>/ui/build</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>common/nginx/cert/</directory>
+            <outputDirectory>common/nginx/cert/</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>common/nginx/conf.d/</directory>
+            <outputDirectory>common/nginx/conf.d/</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <files>
+        <file>
+            <source>src/main/resources/docker-compose.yml</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>common/redis/conf/redis.conf</source>
+            <outputDirectory>/common/redis/conf/redis.config</outputDirectory>
+        </file>
+    </files>
+
+</assembly>
+
