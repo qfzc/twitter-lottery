@@ -17,7 +17,7 @@
     <modules>
         <module>distro</module>
         <module>server</module>
-        <module>ui/admin-dashboard</module>
+        <module>dashboard</module>
     </modules>
 
     <developers>

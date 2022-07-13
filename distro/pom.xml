@@ -20,7 +20,7 @@
 
     <modules>
         <module>../server</module>
-        <module>../ui/admin-dashboard</module>
+        <module>../dashboard</module>
     </modules>
 
     <build>
