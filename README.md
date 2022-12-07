@@ -2,6 +2,7 @@
 Twitter抽奖机器人，根据录入的大V地址，自动转发、点赞、关注等操作，参与抽奖
 
 [View Demo](http://idart.work/)
+![users](/imgs/users.png)
 
 ## 开发环境
 ### 后端
