@@ -3,6 +3,7 @@ Twitter抽奖机器人，根据录入的大V地址，自动转发、点赞、关
 
 [View Demo](http://idart.work/)
 ![users](/imgs/users.png)
+![watch](/imgs/wallet.png)
 
 ## 开发环境
 ### 后端
